@@ -35,7 +35,7 @@ Modificaciones a la Test-Network
 Para adaptar la test-network a las necesidades de nuestra cadena de suministro, se realizaron las siguientes modificaciones:
 
 Organizaciones: La red incluye tres organizaciones que representan a los actores de la cadena de suministro: Fabricante, Transportista, y Distribuidor. Cada organización tiene su propio peer en la red.
-Canales: Se configuró un canal único (supplychainchannel) para facilitar las transacciones entre las organizaciones mencionadas.
+Canales: Se configuró un canal único (mychannel) para facilitar las transacciones entre las organizaciones mencionadas.
 Chaincode: Se implementó y desplegó un chaincode específico para gestionar las operaciones de la cadena de suministro, descrito en detalle en la sección siguiente.
 Chaincode de la Cadena de Suministro
 El chaincode SupplyChain gestiona los productos a lo largo de la cadena de suministro. Se implementaron las siguientes funciones:
