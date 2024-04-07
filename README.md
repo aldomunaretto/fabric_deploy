@@ -51,4 +51,16 @@ Instrucciones Básicas
 Clone este repositorio y navegue al directorio test-network.
 Ejecute ./network.sh up createChannel -s couchdb para iniciar la red y crear el canal.
 
+
+luego incluimos la tercera organización 
+cambiamos a la carpeta addOrg3 y ejecutamos el siguiente comando:
+./addOrg3.sh up -s couchdb
+
 Despliegue el chaincode SupplyChain utilizando ./network.sh deployCCAAS -ccn supplychain -ccp ../../supplychain-chaincode-typescript -ccl typescript -ccep "OR('Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')"
+
+Para aumentar el numero de peers de las organizaciones 1 y 2, primero, antes de levantar la test-network, modificamos los ficheros yamls dentro de la carpeta cryptogen para preparar el material criptografico para los dos peers que tendran cada una de estas organizaciones.
+
+luego modificamos el bash script del conection profile (ccp-generate.sh) para que tome la variable que designe el puerto para los Peer1, y hacemos lo debido en los templates yaml y json para que incluyan la información de los peer1 para cada org.
+
+modificamos los ficheros de compose para añadir instancias de couchdb para cada uno de los nuevos peers (compose-couch.yaml) y creamos los servicios para los dos nuevos peer1 tanto en el fichero compose-test-net.yaml como en el docker-compose-test-net.yaml
+
