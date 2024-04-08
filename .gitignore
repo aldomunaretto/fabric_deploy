@@ -1,5 +1,4 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,go,node
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,go,node
 
 ### Go ###
 # If you prefer the allow list template instead of the deny list, see community template:
@@ -19,7 +18,7 @@
 *.out
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
+vendor/
 
 # Go workspace file
 go.work
@@ -185,5 +184,15 @@ dist
 
 ## Hyperledger Fabric installation
 install-fabric.sh
+fabric-samples/
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,go,node
+# Emacs backup files
+*~
+*#
+.#*
+
+# Vim file artifacts
+.*.sw*
+.DS_Store
+.project
+

@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var BASEDIR = getEnv("FABRIC_CONNECTOR_BASEDIR", os.ExpandEnv("/home/ubuntu/fabric_deploy/fabric-samples/test-network"))
+var BASEDIR = getEnv("FABRIC_CONNECTOR_BASEDIR", os.ExpandEnv("/home/ubuntu/fabric_deploy/test-network"))
 
 var (
 	once   sync.Once
