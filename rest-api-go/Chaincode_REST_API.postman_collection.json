@@ -1,0 +1,165 @@
+{
+	"info": {
+		"_postman_id": "fc25a7ea-ccfb-434a-8bbc-2eb1eee4333c",
+		"name": "Chaincode REST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20606376"
+	},
+	"item": [
+		{
+			"name": "RegisterProduct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"channel\": \"mychannel\",\n    \"chaincode\": \"supplychain\",\n    \"function\": \"RegisterProduct\",\n    \"arguments\": [\"producto123\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{IP_MACHINE}}:9595/transaction",
+					"protocol": "http",
+					"host": [
+						"{{IP_MACHINE}}"
+					],
+					"port": "9595",
+					"path": [
+						"transaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ChangeProductStatus",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"channel\": \"mychannel\",\n    \"chaincode\": \"supplychain\",\n    \"function\": \"ChangeProductStatus\",\n    \"arguments\": [\"producto123\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{IP_MACHINE}}:9595/transaction",
+					"protocol": "http",
+					"host": [
+						"{{IP_MACHINE}}"
+					],
+					"port": "9595",
+					"path": [
+						"transaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetProduct",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"channel\": \"mychannel\",\n    \"chaincode\": \"supplychain\",\n    \"function\": \"GetProduct\",\n    \"arguments\": [\"producto124\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{IP_MACHINE}}:9595/transaction",
+					"protocol": "http",
+					"host": [
+						"{{IP_MACHINE}}"
+					],
+					"port": "9595",
+					"path": [
+						"transaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetProductStatus",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"channel\": \"mychannel\",\n    \"chaincode\": \"supplychain\",\n    \"function\": \"GetProductStatus\",\n    \"arguments\": [\"producto123\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{IP_MACHINE}}:9595/transaction",
+					"protocol": "http",
+					"host": [
+						"{{IP_MACHINE}}"
+					],
+					"port": "9595",
+					"path": [
+						"transaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ProductExists",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"channel\": \"mychannel\",\n    \"chaincode\": \"supplychain\",\n    \"function\": \"ProductExists\",\n    \"arguments\": [\"producto123\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{IP_MACHINE}}:9595/transaction",
+					"protocol": "http",
+					"host": [
+						"{{IP_MACHINE}}"
+					],
+					"port": "9595",
+					"path": [
+						"transaction"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "IP_MACHINE",
+			"value": "51.20.241.155"
+		}
+	]
+}
