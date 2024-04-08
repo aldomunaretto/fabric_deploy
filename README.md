@@ -1,74 +1,59 @@
 # Supply-Chain Network en Hyperledger Fabric:
 
-Este proyecto es una implementación de prueba de concepto para una cadena de suministro utilizando Hyperledger Fabric. Se ha modificado la test-network proporcionada por fabric-samples para simular un entorno de cadena de suministro que incluye fabricantes, transportistas y distribuidores. Además, se ha desarrollado un chaincode en TypeScript que gestiona las interacciones dentro de esta red.
+Este proyecto es una implementación de prueba de concepto para una cadena de suministro utilizando Hyperledger Fabric. Se ha modificado la `test-network` proporcionada por `fabric-samples` para simular un entorno de cadena de suministro que incluye fabricantes, transportistas, y distribuidores. Además, se ha desarrollado un chaincode en TypeScript que gestiona las interacciones dentro de esta red.
 
-## Tecnologías Utilizadas:  
+## Tecnologías Utilizadas
+
 - [Hyperledger Fabric v2.5](https://hyperledger-fabric.readthedocs.io/en/release-2.5/install.html): Utilizado para crear la red blockchain y ejecutar el chaincode.
 - Node.js y NPM: Para ejecutar y gestionar el chaincode escrito en TypeScript.
 
-## Modificaciones a la Test-Network:
-Para adaptar la test-network a las necesidades de nuestra cadena de suministro, se realizaron las siguientes modificaciones:
+## Modificaciones a la Test-Network
 
-### Organizaciones: 
-La red incluye tres organizaciones que representan a los actores de la cadena de suministro: Fabricante (Org1), Transportista (Org2) y Distribuidor (Org3). El Fabricante y el transportista tiene ambos dos peers en la red y el Distribuidor solo tiene uno.
+Para adaptar la `test-network` a las necesidades de nuestra cadena de suministro, se realizaron las siguientes modificaciones:
 
-### Canales: 
-Se configuró un canal único (mychannel) para facilitar las transacciones entre las organizaciones mencionadas.
+### Organizaciones
 
-### Chaincode: 
-Se implementó y desplegó un chaincode específico para gestionar las operaciones de la cadena de suministro. 
+La red incluye tres organizaciones que representan a los actores de la cadena de suministro:
+- Fabricante (Org1), con dos peers.
+- Transportista (Org2), con dos peers.
+- Distribuidor (Org3), con un solo peer.
 
-##### Define las Entidades y sus Atributos: 
-Antes de empezar a escribir el chaincode, necesitas definir claramente las entidades involucradas (Fabricante (Org1), Transportista (Org2), Distribuidor (Org3)) y qué atributos (propiedades) tendrán cada uno de los productos: 
-1. ID
-1. Descripción
-1. Estado (Fabricado, En tránsito, Entregado al distribuidor, Entregado al minorista) 
-##### Define las Operaciones del Chaincode:
-Determina qué operaciones necesitarás implementar:
+### Canales
 
-1. Registrar Manufactura del Producto: Realizado por el fabricante.  
-1. Actualizar Estado a En Tránsito: Realizado por el transportista.  
-1. Actualizar Estado a Entregado al Distribuidor: También por el transportista.  
-1. Actualizar Estado a Entregado al Minorista: Realizado por el distribuidor.  
+Se configuró un canal único (`mychannel`) para facilitar las transacciones entre las organizaciones mencionadas.
 
-El chaincode SupplyChain gestiona los productos a lo largo de la cadena de suministro. Se implementaron las siguientes funciones:
+### Chaincode
 
-- RegisterProduct: Permite al fabricante registrar un nuevo producto en la red, asignándole un identificador único.
-- ChangeProductStatu: Permite a los transportistas y distribuidores actualizar el estado del producto (e.g., 'onTransit', 'deliveredToDistributor', 'deliveredToRetailer').
-- GetProductStatus: Permite consultar el estado del producto asentado en el ledger.
-- GetProduct: Permite consultar la información del producto asentado en el ledger en formato JSON.
-- ProductExists: Permite consultar si el producto ya existe en el ledger.
+Se implementó y desplegó un chaincode específico para gestionar las operaciones de la cadena de suministro, con las siguientes funcionalidades:
 
-### Cambios introducidos en el repositorio test-network para atender las necesidades del caso de uso
-- Para aumentar el numero de peers de las Orgs 1 y 2, antes de levantar la test-network, modifiqué los ficheros yamls dentro de la carpeta cryptogen para preparar el material criptografico para los dos nuevos peers que tendran cada una de estas organizaciones.
+- **RegisterProduct**: Permite al fabricante registrar un nuevo producto en la red, asignándole un identificador único.
+- **ChangeProductStatus**: Permite a los transportistas y distribuidores actualizar el estado del producto (e.g., 'onTransit', 'deliveredToDistributor', 'deliveredToRetailer').
+- **GetProductStatus**: Consulta el estado actual del producto.
+- **GetProduct**: Devuelve la información del producto en formato JSON.
+- **ProductExists**: Verifica si un producto específico ya existe en el ledger.
 
-- Modifiqué el bash script del connection profile (ccp-generate.sh) para que tome la variable que designe el puerto para los peer1, así como modifiqué los templates yaml y json para que incluyan la información de los peer1 para cada org.
+## Cambios Introducidos en el Repositorio Test-Network
 
-- Modifiqué los ficheros de compose para añadir instancias de couchdb para cada uno de los nuevos peers (compose-couch.yaml) y creamos los servicios para los dos nuevos peer1 tanto en el fichero compose-test-net.yaml como en el docker-compose-test-net.yaml
+- **Preparación de Material Criptográfico**: Modificación de ficheros YAML dentro de `cryptogen` para los nuevos peers de Org1 y Org2.
+- **Script de Perfil de Conexión**: Actualización del script `ccp-generate.sh` y los templates correspondientes para incluir los nuevos peers.
+- **Composiciones de Docker**: Añadidas instancias de `couchdb` para los nuevos peers y actualización de los ficheros `docker-compose`.
+- **Unión de Nuevos Peers al Canal**: Automatización mediante modificaciones en `envVars.sh` y `createChannel.sh`.
 
-- Para unir los nuevos peers al channel, se podia hacer deforma manual utilizando el comando: `peer channel join` y el fichero del bloque genesis que se encuentra en la carpeta channel-artifacts. Esto implica establecer una serie de variables de entorno: 
+> **Nota**: Durante la práctica se detectaron [modificaciones en `fabric-samples`](https://github.com/hyperledger/fabric-samples/commit/ebbc41993350f8a98442d16fe39a70fdbd73a07d), lo cual puede afectar a los ficheros respecto a lo visto en clase.
 
-    export CORE_PEER_TLS_ENABLED=true  
-    export CORE_PEER_LOCALMSPID="Org1MSP"  
-    export CORE_PEER_TLS_ROOTCERT_FILE=organizations/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem  
-    export CORE_PEER_MSPCONFIGPATH=organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp  
-    export CORE_PEER_ADDRESS=localhost:7055
-    export PATH=$PWD/../bin:$PATH
-    export FABRIC_CFG_PATH=${PWD}/../config/
+## Uso del Repositorio
 
-- Finalmente modifiqué los bash script envVars.sh y createChannel.sh para hacer esto de forma automatizada.
+### Configuración Inicial
 
-- Durante la realización de la práctica, detecté que se han realizado [modificaciones](https://github.com/hyperledger/fabric-samples/commit/ebbc41993350f8a98442d16fe39a70fdbd73a07d) sobre el repositorio de fabric-samples, lo cual hace que el contenido de los ficheros sea distinto al visto durante las sesiones de clase.
-
-## Instrucciones Básicas para el uso del repositorio:
-
-1. Clone este repositorio y navegue al directorio test-network.
+Clone este repositorio y navegue al directorio test-network.
 
 ```bash
 cd fabric-samples/test-network
 ```
 
-1. Despliega la test-network de forma habitual con couchDB para las Org1 - Org2 y creamos el canal 
+### Despliegue de la Red
+
+Despliegue la `test-network` con `couchdb` y cree el canal.
 
 ```bash
 # Desde el directorio fabric-samples/test-network
@@ -76,7 +61,7 @@ cd fabric-samples/test-network
 ./network.sh up createChannel -s couchdb
 ```
 
-1. Añade la Org3
+### Añadir Org3
 
 ```bash
 # Desde el directorio addOrg3
@@ -84,14 +69,14 @@ cd addOrg3
 ./addOrg3.sh up -s couchdb
 ```
 
-1. Despliega el Chaincode como servicio externo
+### Despliegue del Chaincode como Servicio Externo
 
 ```bash
 # Desde el directorio fabric-samples/test-network
 ./network.sh deployCCAAS -ccn supplychain -ccp ../../supplychain-chaincode-typescript -ccl typescript -ccep "OR('Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')"
 ```
 
-1. Interactuar con el Chaincode
+### Interacción con el Chaincode
 
 ```bash
 # Desde el directorio rest-api-go
